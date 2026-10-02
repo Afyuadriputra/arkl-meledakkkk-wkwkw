@@ -1,0 +1,139 @@
+import {
+  Activity,
+  Bell,
+  ChartNoAxesCombined,
+  FileText,
+  Gauge,
+  RadioTower,
+  Search,
+  Settings,
+  UserRound,
+  Users,
+} from "lucide-react"
+
+export const operationalNavigation = [
+  {
+    label: "Dasbor",
+    href: "/app/dashboard",
+    icon: Gauge,
+  },
+  {
+    label: "Pemantauan",
+    items: [
+      {
+        label: "H₂S Langsung",
+        href: "/app/monitoring",
+        icon: Activity,
+      },
+      {
+        label: "Perangkat",
+        href: "/app/devices",
+        icon: RadioTower,
+      },
+    ],
+  },
+  {
+    label: "Risiko",
+    items: [
+      {
+        label: "Pemulung",
+        href: "/app/workers",
+        icon: Users,
+      },
+      {
+        label: "ARKL",
+        href: "/app/arkl",
+        icon: ChartNoAxesCombined,
+      },
+      {
+        label: "Peringatan",
+        href: "/app/alerts",
+        icon: Bell,
+      },
+    ],
+  },
+  {
+    label: "Penelitian",
+    items: [
+      {
+        label: "Analitik",
+        href: "/app/research",
+        icon: Search,
+      },
+      {
+        label: "Laporan",
+        href: "/app/reports",
+        icon: FileText,
+      },
+    ],
+  },
+]
+
+export const researchNavigation = [
+  {
+    label: "Ringkasan",
+    href: "/research/dashboard",
+    icon: Gauge,
+  },
+  {
+    label: "H₂S",
+    href: "/research/h2s",
+    icon: Activity,
+  },
+  {
+    label: "ARKL",
+    href: "/research/arkl",
+    icon: ChartNoAxesCombined,
+  },
+  {
+    label: "Risiko",
+    href: "/research/risk",
+    icon: Bell,
+  },
+  {
+    label: "Pajanan",
+    href: "/research/exposure",
+    icon: Users,
+  },
+  {
+    label: "Peringatan",
+    href: "/research/alerts",
+    icon: Bell,
+  },
+  {
+    label: "Laporan",
+    href: "/research/reports",
+    icon: FileText,
+  },
+]
+
+export const workerNavigation = [
+  {
+    label: "Beranda",
+    href: "/worker/home",
+    icon: Gauge,
+  },
+  {
+    label: "Risiko",
+    href: "/worker/risk",
+    icon: ChartNoAxesCombined,
+  },
+  {
+    label: "Peringatan",
+    href: "/worker/alerts",
+    icon: Bell,
+  },
+  {
+    label: "Profil",
+    href: "/worker/profile",
+    icon: UserRound,
+  },
+]
+
+export const systemNavigation = [
+  {
+    label: "Akun",
+    href: "/app/accounts",
+    icon: Settings,
+  },
+]

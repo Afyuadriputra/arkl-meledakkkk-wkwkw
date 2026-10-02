@@ -1,0 +1,387 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/inter";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Visible, theme-aware scrollbars for the complete operational worker list. */
+.workers-list-scroll {
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--primary) var(--muted);
+  scrollbar-width: auto;
+}
+
+.workers-list-scroll::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.workers-list-scroll::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: 999px;
+}
+
+.workers-list-scroll::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border: 3px solid var(--muted);
+  border-radius: 999px;
+}
+
+.workers-list-scroll::-webkit-scrollbar-corner {
+  background: var(--muted);
+}
+
+/* =========================================================
+   SMART H2S — TAILWIND / SHADCN TOKEN BRIDGE
+   ========================================================= */
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: "Inter Variable", Inter, system-ui, sans-serif;
+
+  /* Core */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Charts */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* SMART H2S semantic surfaces */
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-strong: var(--surface-strong);
+
+  /* Environmental severity */
+  --color-status-normal: var(--status-normal);
+  --color-status-caution: var(--status-caution);
+  --color-status-warning: var(--status-warning);
+  --color-status-danger: var(--status-danger);
+  --color-status-critical: var(--status-critical);
+
+  /* Alert levels */
+  --color-alert-low: var(--alert-low);
+  --color-alert-medium: var(--alert-medium);
+  --color-alert-high: var(--alert-high);
+  --color-alert-critical: var(--alert-critical);
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.25rem;
+  --radius-4xl: 1.5rem;
+  --radius-full: 9999px;
+}
+
+/* =========================================================
+   LIGHT THEME
+   ========================================================= */
+
+:root {
+  color-scheme: light;
+
+  /* Main application */
+  --background: #f6faf9;
+  --foreground: #181c1c;
+
+  /* Surface */
+  --card: #ffffff;
+  --card-foreground: #181c1c;
+
+  --popover: #ffffff;
+  --popover-foreground: #181c1c;
+
+  --surface: #f6faf9;
+  --surface-muted: #f0f4f3;
+  --surface-strong: #e5e9e8;
+
+  /* Brand */
+  --primary: #006565;
+  --primary-foreground: #ffffff;
+
+  --secondary: #296767;
+  --secondary-foreground: #ffffff;
+
+  /* Neutral interaction */
+  --muted: #f0f4f3;
+  --muted-foreground: #566261;
+
+  --accent: #e3f2f1;
+  --accent-foreground: #004f4f;
+
+  /* Destructive action only */
+  --destructive: #ba1a1a;
+  --destructive-foreground: #ffffff;
+
+  /* Forms */
+  --border: #d7dfde;
+  --input: #bdc9c8;
+  --ring: #008080;
+
+  /* Charts */
+  --chart-1: #006565;
+  --chart-2: #008080;
+  --chart-3: #2e7d32;
+  --chart-4: #ef6c00;
+  --chart-5: #c62828;
+
+  /* Sidebar */
+  --sidebar: #296767;
+  --sidebar-foreground: #dff5f4;
+
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #004f4f;
+
+  --sidebar-accent: #175857;
+  --sidebar-accent-foreground: #ffffff;
+
+  --sidebar-border: #3c7776;
+  --sidebar-ring: #76d6d5;
+
+  /* Environmental severity */
+  --status-normal: #2e7d32;
+  --status-caution: #b88700;
+  --status-warning: #ef6c00;
+  --status-danger: #c62828;
+  --status-critical: #8e0000;
+
+  /* Alert levels */
+  --alert-low: #f9a825;
+  --alert-medium: #ef6c00;
+  --alert-high: #c62828;
+  --alert-critical: #8e0000;
+}
+
+/* =========================================================
+   DARK THEME
+   ========================================================= */
+
+.dark {
+  color-scheme: dark;
+
+  --background: #111817;
+  --foreground: #edf2f1;
+
+  --card: #182120;
+  --card-foreground: #edf2f1;
+
+  --popover: #182120;
+  --popover-foreground: #edf2f1;
+
+  --surface: #111817;
+  --surface-muted: #1d2827;
+  --surface-strong: #283332;
+
+  --primary: #76d6d5;
+  --primary-foreground: #003737;
+
+  --secondary: #94d1d1;
+  --secondary-foreground: #003737;
+
+  --muted: #222d2c;
+  --muted-foreground: #aebbb9;
+
+  --accent: #243c3b;
+  --accent-foreground: #dff5f4;
+
+  --destructive: #ffb4ab;
+  --destructive-foreground: #690005;
+
+  --border: #354442;
+  --input: #465654;
+  --ring: #76d6d5;
+
+  --chart-1: #76d6d5;
+  --chart-2: #94d1d1;
+  --chart-3: #81c784;
+  --chart-4: #ffb74d;
+  --chart-5: #ef9a9a;
+
+  --sidebar: #172120;
+  --sidebar-foreground: #d9e5e3;
+
+  --sidebar-primary: #76d6d5;
+  --sidebar-primary-foreground: #003737;
+
+  --sidebar-accent: #253b3a;
+  --sidebar-accent-foreground: #edf2f1;
+
+  --sidebar-border: #354442;
+  --sidebar-ring: #76d6d5;
+
+  --status-normal: #66bb6a;
+  --status-caution: #fbc02d;
+  --status-warning: #fb8c00;
+  --status-danger: #ef5350;
+  --status-critical: #ff5252;
+
+  --alert-low: #fbc02d;
+  --alert-medium: #fb8c00;
+  --alert-high: #ef5350;
+  --alert-critical: #ff5252;
+}
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    font-feature-settings:
+      "cv02",
+      "cv03",
+      "cv04",
+      "cv11";
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply min-h-screen bg-background text-foreground antialiased;
+    margin: 0;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button,
+  [role="button"],
+  a,
+  input,
+  select,
+  textarea {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 22%, transparent);
+    color: var(--foreground);
+  }
+}
+
+/* =========================================================
+   SMART H2S UTILITIES
+   ========================================================= */
+
+@layer utilities {
+  /* Numeric sensor values / RQ values */
+  .numeric-data {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Standard application page width */
+  .app-container {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+  }
+
+  /* Touch target — Fitts's Law */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Safe-area helper for Worker mobile navigation */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Subtle live indicator */
+  .live-dot {
+    position: relative;
+  }
+
+  .live-dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    border: 2px solid currentColor;
+    opacity: 0;
+    animation: smart-h2s-live-pulse 2s ease-out infinite;
+  }
+}
+
+/* =========================================================
+   MOTION
+   ========================================================= */
+
+@keyframes smart-h2s-live-pulse {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.5;
+  }
+
+  70% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Respect accessibility preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

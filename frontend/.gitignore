@@ -1,0 +1,50 @@
+﻿# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node dependencies
+node_modules
+dist
+dist-ssr
+*.local
+
+# Environment variables & secrets (CRITICAL)
+.env
+.env.*
+!.env.example
+.env.integration
+
+# Internal project notes & research docs
+catatan/
+catatan/**
+*.docx
+*.pdf
+*.xlsx
+
+# Testing & Coverage
+coverage/
+*.lcov
+.vitest/
+
+# Editor / IDE directories
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# TypeScript build info cache
+*.tsbuildinfo
+node_modules/.tmp/

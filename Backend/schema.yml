@@ -1,0 +1,3179 @@
+openapi: 3.0.3
+info:
+  title: ''
+  version: 0.0.0
+paths:
+  /api/schema/:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/v1/accounts/:
+    post:
+      operationId: v1_accounts_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AccountCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccountCreate'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountProfile'
+          description: ''
+  /api/v1/alerts/:
+    get:
+      operationId: v1_alerts_list
+      parameters:
+      - in: query
+        name: alert_level
+        schema:
+          type: string
+      - in: query
+        name: device_code
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: status
+        schema:
+          type: string
+      - in: query
+        name: worker_code
+        schema:
+          type: string
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAlertList'
+          description: ''
+  /api/v1/alerts/{id}/:
+    get:
+      operationId: v1_alerts_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+          description: ''
+  /api/v1/alerts/{id}/acknowledge/:
+    patch:
+      operationId: v1_alerts_acknowledge_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+          description: ''
+  /api/v1/alerts/{id}/resolve/:
+    patch:
+      operationId: v1_alerts_resolve_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+          description: ''
+  /api/v1/alerts/evaluate/:
+    post:
+      operationId: v1_alerts_evaluate_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertEvaluateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AlertEvaluateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AlertEvaluateRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertEvaluationResponse'
+          description: ''
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertEvaluationResponse'
+          description: ''
+  /api/v1/arkl/historical/:
+    post:
+      operationId: v1_arkl_historical_create
+      summary: Calculate historical ARKL risk
+      tags:
+      - ARKL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HistoricalARKLRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HistoricalARKLRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/HistoricalARKLRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ARKLResult'
+          description: ''
+  /api/v1/arkl/realtime/:
+    post:
+      operationId: v1_arkl_realtime_create
+      summary: Calculate realtime ARKL risk and evaluate alert
+      tags:
+      - ARKL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RealtimeARKLRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RealtimeARKLRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RealtimeARKLRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RealtimeARKLResponse'
+          description: ''
+  /api/v1/arkl/reference/:
+    post:
+      operationId: v1_arkl_reference_create
+      tags:
+      - ARKL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReferenceARKLRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReferenceARKLRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReferenceARKLRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ARKLResult'
+          description: ''
+  /api/v1/arkl/reference-measurements/:
+    get:
+      operationId: v1_arkl_reference_measurements_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedReferenceMeasurementList'
+          description: ''
+    post:
+      operationId: v1_arkl_reference_measurements_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReferenceMeasurement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReferenceMeasurement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReferenceMeasurement'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferenceMeasurement'
+          description: ''
+  /api/v1/arkl/reference-measurements/{id}/:
+    get:
+      operationId: v1_arkl_reference_measurements_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferenceMeasurement'
+          description: ''
+    put:
+      operationId: v1_arkl_reference_measurements_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReferenceMeasurement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReferenceMeasurement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReferenceMeasurement'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferenceMeasurement'
+          description: ''
+    patch:
+      operationId: v1_arkl_reference_measurements_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedReferenceMeasurement'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedReferenceMeasurement'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedReferenceMeasurement'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferenceMeasurement'
+          description: ''
+  /api/v1/arkl/results/:
+    get:
+      operationId: v1_arkl_results_list
+      summary: List ARKL results
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - ARKL
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedARKLResultList'
+          description: ''
+  /api/v1/arkl/results/{id}/:
+    get:
+      operationId: v1_arkl_results_retrieve
+      summary: Retrieve ARKL result
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - ARKL
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ARKLResult'
+          description: ''
+  /api/v1/auth/login/:
+    post:
+      operationId: v1_auth_login_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+          description: ''
+  /api/v1/auth/logout/:
+    post:
+      operationId: v1_auth_logout_create
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/auth/me/:
+    get:
+      operationId: v1_auth_me_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+          description: ''
+  /api/v1/devices/:
+    get:
+      operationId: v1_devices_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDeviceList'
+          description: ''
+    post:
+      operationId: v1_devices_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Device'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Device'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+          description: ''
+  /api/v1/devices/{id}/:
+    get:
+      operationId: v1_devices_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this device.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+          description: ''
+    patch:
+      operationId: v1_devices_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this device.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDevice'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDevice'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDevice'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+          description: ''
+  /api/v1/exposure-profiles/:
+    get:
+      operationId: v1_exposure_profiles_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedExposureProfileList'
+          description: ''
+    post:
+      operationId: v1_exposure_profiles_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExposureProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ExposureProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ExposureProfile'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExposureProfile'
+          description: ''
+  /api/v1/exposure-profiles/{id}/:
+    get:
+      operationId: v1_exposure_profiles_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this exposure profile.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExposureProfile'
+          description: ''
+    patch:
+      operationId: v1_exposure_profiles_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this exposure profile.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedExposureProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedExposureProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedExposureProfile'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExposureProfile'
+          description: ''
+  /api/v1/me/alerts/:
+    get:
+      operationId: v1_me_alerts_list
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Alert'
+          description: ''
+  /api/v1/me/arkl-results/:
+    get:
+      operationId: v1_me_arkl_results_list
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ARKLResult'
+          description: ''
+  /api/v1/me/exposure/:
+    get:
+      operationId: v1_me_exposure_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyExposureProfile'
+          description: ''
+    post:
+      operationId: v1_me_exposure_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MyExposureProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MyExposureProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MyExposureProfile'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyExposureProfile'
+          description: ''
+    patch:
+      operationId: v1_me_exposure_partial_update
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMyExposureProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMyExposureProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMyExposureProfile'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyExposureProfile'
+          description: ''
+  /api/v1/me/monitoring/:
+    get:
+      operationId: v1_me_monitoring_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyMonitoring'
+          description: ''
+  /api/v1/me/profile/:
+    get:
+      operationId: v1_me_profile_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyWorkerProfile'
+          description: ''
+    patch:
+      operationId: v1_me_profile_partial_update
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMyWorkerProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMyWorkerProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMyWorkerProfile'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyWorkerProfile'
+          description: ''
+  /api/v1/readings/:
+    get:
+      operationId: v1_readings_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedH2SReadingList'
+          description: ''
+  /api/v1/readings/{id}/:
+    get:
+      operationId: v1_readings_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this h2s reading.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/H2SReading'
+          description: ''
+  /api/v1/readings/latest/:
+    get:
+      operationId: v1_readings_latest_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/H2SReading'
+          description: ''
+  /api/v1/research/alert-summary/:
+    get:
+      operationId: v1_research_alert_summary_retrieve
+      description: |-
+        Base class for Research endpoints.
+
+        ADMIN / OPERATOR / RESEARCHER:
+            authenticated read access.
+
+        WORKER:
+            denied.
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertSummary'
+          description: ''
+  /api/v1/research/arkl-results/:
+    get:
+      operationId: v1_research_arkl_results_retrieve
+      description: |-
+        Base class for Research endpoints.
+
+        ADMIN / OPERATOR / RESEARCHER:
+            authenticated read access.
+
+        WORKER:
+            denied.
+      parameters:
+      - in: query
+        name: calculation_type
+        schema:
+          enum:
+          - REALTIME
+          - HISTORICAL
+          type: string
+          minLength: 1
+        description: |-
+          * `REALTIME` - REALTIME
+          * `HISTORICAL` - HISTORICAL
+      - in: query
+        name: calculation_version
+        schema:
+          type: string
+          default: 2.0.0-MVP
+          minLength: 1
+      - in: query
+        name: end
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: source_simulated
+        schema:
+          type: boolean
+          nullable: true
+      - in: query
+        name: start
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: worker_code
+        schema:
+          type: string
+          minLength: 1
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ARKLResearchResponse'
+          description: ''
+  /api/v1/research/export/arkl.csv:
+    get:
+      operationId: v1_research_export_arkl.csv_retrieve
+      description: |-
+        Base class for Research endpoints.
+
+        ADMIN / OPERATOR / RESEARCHER:
+            authenticated read access.
+
+        WORKER:
+            denied.
+      parameters:
+      - in: query
+        name: calculation_type
+        schema:
+          enum:
+          - REALTIME
+          - HISTORICAL
+          type: string
+          minLength: 1
+        description: |-
+          * `REALTIME` - REALTIME
+          * `HISTORICAL` - HISTORICAL
+      - in: query
+        name: calculation_version
+        schema:
+          type: string
+          default: 2.0.0-MVP
+          minLength: 1
+      - in: query
+        name: end
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: source_simulated
+        schema:
+          type: boolean
+          nullable: true
+      - in: query
+        name: start
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: worker_code
+        schema:
+          type: string
+          minLength: 1
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+          description: ''
+  /api/v1/research/exposure-summary/:
+    get:
+      operationId: v1_research_exposure_summary_retrieve
+      description: |-
+        Base class for Research endpoints.
+
+        ADMIN / OPERATOR / RESEARCHER:
+            authenticated read access.
+
+        WORKER:
+            denied.
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExposureSummary'
+          description: ''
+  /api/v1/research/h2s-summary/:
+    get:
+      operationId: v1_research_h2s_summary_retrieve
+      description: |-
+        Base class for Research endpoints.
+
+        ADMIN / OPERATOR / RESEARCHER:
+            authenticated read access.
+
+        WORKER:
+            denied.
+      parameters:
+      - in: query
+        name: device_code
+        schema:
+          type: string
+          minLength: 1
+      - in: query
+        name: end
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: source_simulated
+        schema:
+          type: boolean
+          nullable: true
+      - in: query
+        name: start
+        schema:
+          type: string
+          format: date-time
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/H2SSummary'
+          description: ''
+  /api/v1/research/h2s-trends/:
+    get:
+      operationId: v1_research_h2s_trends_retrieve
+      description: |-
+        Base class for Research endpoints.
+
+        ADMIN / OPERATOR / RESEARCHER:
+            authenticated read access.
+
+        WORKER:
+            denied.
+      parameters:
+      - in: query
+        name: device_code
+        schema:
+          type: string
+          minLength: 1
+      - in: query
+        name: end
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: interval
+        schema:
+          enum:
+          - raw
+          - hour
+          - day
+          type: string
+          default: day
+          minLength: 1
+        description: |-
+          * `raw` - raw
+          * `hour` - hour
+          * `day` - day
+      - in: query
+        name: source_simulated
+        schema:
+          type: boolean
+          nullable: true
+      - in: query
+        name: start
+        schema:
+          type: string
+          format: date-time
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/H2STrendResponse'
+          description: ''
+  /api/v1/research/risk-distribution/:
+    get:
+      operationId: v1_research_risk_distribution_retrieve
+      description: |-
+        Base class for Research endpoints.
+
+        ADMIN / OPERATOR / RESEARCHER:
+            authenticated read access.
+
+        WORKER:
+            denied.
+      parameters:
+      - in: query
+        name: calculation_version
+        schema:
+          type: string
+          default: 2.0.0-MVP
+          minLength: 1
+      - in: query
+        name: source_simulated
+        schema:
+          type: boolean
+          nullable: true
+      - in: query
+        name: worker_code
+        schema:
+          type: string
+          minLength: 1
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskDistribution'
+          description: ''
+  /api/v1/workers/:
+    get:
+      operationId: v1_workers_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedWorkerList'
+          description: ''
+    post:
+      operationId: v1_workers_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Worker'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Worker'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Worker'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Worker'
+          description: ''
+  /api/v1/workers/{id}/:
+    get:
+      operationId: v1_workers_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this worker.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Worker'
+          description: ''
+    patch:
+      operationId: v1_workers_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this worker.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedWorker'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedWorker'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedWorker'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Worker'
+          description: ''
+components:
+  schemas:
+    ARKLResearchResponse:
+      type: object
+      properties:
+        calculation_version:
+          type: string
+        count:
+          type: integer
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ARKLResearchResult'
+      required:
+      - calculation_version
+      - count
+      - results
+    ARKLResearchResult:
+      type: object
+      properties:
+        id:
+          type: integer
+        worker_code:
+          type: string
+        calculation_type:
+          type: string
+        concentration_ppm:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,6})?$
+        concentration_mg_m3:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,6})?$
+        exposure_concentration_mg_m3:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,6})?$
+          nullable: true
+        averaging_time:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,4})?$
+          nullable: true
+        intake:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,12})?$
+          nullable: true
+        rfc:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,8})?$
+        rq:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,12})?$
+        interpretation:
+          type: string
+        calculation_version:
+          type: string
+        source_simulated:
+          type: boolean
+        reading_id:
+          type: integer
+          nullable: true
+        period_start:
+          type: string
+          format: date-time
+          nullable: true
+        period_end:
+          type: string
+          format: date-time
+          nullable: true
+        reading_count:
+          type: integer
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - averaging_time
+      - calculation_type
+      - calculation_version
+      - concentration_mg_m3
+      - concentration_ppm
+      - created_at
+      - exposure_concentration_mg_m3
+      - id
+      - intake
+      - interpretation
+      - period_end
+      - period_start
+      - reading_count
+      - reading_id
+      - rfc
+      - rq
+      - source_simulated
+      - worker_code
+    ARKLResult:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        worker:
+          type: integer
+          readOnly: true
+        worker_code:
+          type: string
+          readOnly: true
+        reading:
+          type: integer
+          readOnly: true
+          nullable: true
+        reading_received_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        reference_measurement:
+          allOf:
+          - $ref: '#/components/schemas/ReferenceMeasurementSnapshot'
+          readOnly: true
+          nullable: true
+        device_code:
+          type: string
+          nullable: true
+          readOnly: true
+        calculation_type:
+          allOf:
+          - $ref: '#/components/schemas/CalculationTypeEnum'
+          readOnly: true
+        exposure_profile_verified:
+          type: boolean
+          readOnly: true
+          nullable: true
+          description: Status verifikasi profil saat hasil dihitung; null untuk riwayat
+            lama.
+        concentration_ppm:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,6})?$
+          readOnly: true
+        concentration_mg_m3:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,6})?$
+          readOnly: true
+        exposure_concentration_mg_m3:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,6})?$
+          readOnly: true
+          nullable: true
+        body_weight:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,4})?$
+          readOnly: true
+        exposure_time:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,4})?$
+          readOnly: true
+        exposure_frequency:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,4})?$
+          readOnly: true
+        exposure_duration:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,4})?$
+          readOnly: true
+        inhalation_rate:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,4})?$
+          readOnly: true
+        averaging_time:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,4})?$
+          readOnly: true
+          nullable: true
+        intake:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,12})?$
+          readOnly: true
+          nullable: true
+        rfc:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,8})?$
+          readOnly: true
+        rq:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,12})?$
+          readOnly: true
+        interpretation:
+          type: string
+          readOnly: true
+        calculation_version:
+          type: string
+          readOnly: true
+        source_simulated:
+          type: boolean
+          readOnly: true
+        period_start:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        period_end:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        reading_count:
+          type: integer
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - averaging_time
+      - body_weight
+      - calculation_type
+      - calculation_version
+      - concentration_mg_m3
+      - concentration_ppm
+      - created_at
+      - device_code
+      - exposure_concentration_mg_m3
+      - exposure_duration
+      - exposure_frequency
+      - exposure_profile_verified
+      - exposure_time
+      - id
+      - inhalation_rate
+      - intake
+      - interpretation
+      - period_end
+      - period_start
+      - reading
+      - reading_count
+      - reading_received_at
+      - reference_measurement
+      - rfc
+      - rq
+      - source_simulated
+      - worker
+      - worker_code
+    AccountCreate:
+      type: object
+      properties:
+        username:
+          type: string
+          maxLength: 150
+        email:
+          oneOf:
+          - type: string
+            format: email
+            default: ''
+          - type: string
+            maxLength: 0
+        password:
+          type: string
+          writeOnly: true
+          minLength: 8
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+        worker_id:
+          type: integer
+          nullable: true
+      required:
+      - password
+      - role
+      - username
+    AccountProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+        role:
+          allOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          readOnly: true
+        worker:
+          type: integer
+          readOnly: true
+          nullable: true
+        worker_code:
+          type: string
+          readOnly: true
+          nullable: true
+        worker_name:
+          type: string
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - email
+      - id
+      - role
+      - updated_at
+      - username
+      - worker
+      - worker_code
+      - worker_name
+    Alert:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        worker_code:
+          type: string
+          readOnly: true
+        device_code:
+          type: string
+          readOnly: true
+        reading_id:
+          type: integer
+          readOnly: true
+        arkl_result_id:
+          type: integer
+          readOnly: true
+        concentration_ppm:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,6})?$
+          readOnly: true
+        environmental_level:
+          type: integer
+          readOnly: true
+        environmental_status:
+          type: string
+          readOnly: true
+        environmental_severity:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentalSeverityEnum'
+          readOnly: true
+        rq:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,12})?$
+          readOnly: true
+        risk_interpretation:
+          type: string
+          readOnly: true
+        calculation_version:
+          type: string
+          readOnly: true
+        alert_level:
+          allOf:
+          - $ref: '#/components/schemas/AlertLevelEnum'
+          readOnly: true
+        risk_status:
+          allOf:
+          - $ref: '#/components/schemas/RiskStatusEnum'
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          readOnly: true
+        recommendation_codes:
+          readOnly: true
+        alert_rule_version:
+          type: string
+          readOnly: true
+        source_simulated:
+          type: boolean
+          readOnly: true
+        acknowledged_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        acknowledged_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        acknowledged_by_username:
+          type: string
+          readOnly: true
+          nullable: true
+        resolved_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        resolved_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        resolved_by_username:
+          type: string
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - acknowledged_at
+      - acknowledged_by
+      - acknowledged_by_username
+      - alert_level
+      - alert_rule_version
+      - arkl_result_id
+      - calculation_version
+      - concentration_ppm
+      - created_at
+      - device_code
+      - environmental_level
+      - environmental_severity
+      - environmental_status
+      - id
+      - reading_id
+      - recommendation_codes
+      - resolved_at
+      - resolved_by
+      - resolved_by_username
+      - risk_interpretation
+      - risk_status
+      - rq
+      - source_simulated
+      - status
+      - updated_at
+      - worker_code
+    AlertEvaluateRequest:
+      type: object
+      properties:
+        arkl_result_id:
+          type: integer
+      required:
+      - arkl_result_id
+    AlertEvaluationResponse:
+      type: object
+      properties:
+        created:
+          type: boolean
+        duplicate:
+          type: boolean
+        escalated:
+          type: boolean
+        alert:
+          allOf:
+          - $ref: '#/components/schemas/Alert'
+          nullable: true
+      required:
+      - alert
+      - created
+      - duplicate
+      - escalated
+    AlertLevelEnum:
+      enum:
+      - NONE
+      - LOW
+      - MEDIUM
+      - HIGH
+      - CRITICAL
+      type: string
+      description: |-
+        * `NONE` - NONE
+        * `LOW` - LOW
+        * `MEDIUM` - MEDIUM
+        * `HIGH` - HIGH
+        * `CRITICAL` - CRITICAL
+    AlertSummary:
+      type: object
+      properties:
+        total_count:
+          type: integer
+        simulated_count:
+          type: integer
+        physical_count:
+          type: integer
+        by_level:
+          type: array
+          items:
+            $ref: '#/components/schemas/CountItem'
+        by_status:
+          type: array
+          items:
+            $ref: '#/components/schemas/CountItem'
+        by_risk_status:
+          type: array
+          items:
+            $ref: '#/components/schemas/CountItem'
+        by_rule_version:
+          type: array
+          items:
+            $ref: '#/components/schemas/CountItem'
+      required:
+      - by_level
+      - by_risk_status
+      - by_rule_version
+      - by_status
+      - physical_count
+      - simulated_count
+      - total_count
+    ApprovalStatusEnum:
+      enum:
+      - PENDING
+      - APPROVED
+      - REJECTED
+      type: string
+      description: |-
+        * `PENDING` - Menunggu ACC
+        * `APPROVED` - Disetujui
+        * `REJECTED` - Perlu perbaikan
+    CalculationTypeEnum:
+      enum:
+      - REALTIME
+      - HISTORICAL
+      - REFERENCE
+      type: string
+      description: |-
+        * `REALTIME` - Realtime
+        * `HISTORICAL` - Historical
+        * `REFERENCE` - Sensor referensi
+    CountItem:
+      type: object
+      properties:
+        value:
+          type: string
+        count:
+          type: integer
+      required:
+      - count
+      - value
+    CurrentUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          oneOf:
+          - type: string
+            format: email
+          - type: string
+            maxLength: 0
+        role:
+          type: string
+        worker_id:
+          type: integer
+          nullable: true
+        worker_code:
+          type: string
+          nullable: true
+        worker_name:
+          type: string
+          nullable: true
+      required:
+      - email
+      - id
+      - role
+      - username
+      - worker_code
+      - worker_id
+      - worker_name
+    Device:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        device_code:
+          type: string
+          maxLength: 100
+        name:
+          type: string
+          maxLength: 150
+        location:
+          type: string
+          maxLength: 255
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - device_code
+      - id
+      - updated_at
+    EnvironmentalSeverityEnum:
+      enum:
+      - NORMAL
+      - CAUTION
+      - WARNING
+      - DANGER
+      - CRITICAL
+      type: string
+      description: |-
+        * `NORMAL` - NORMAL
+        * `CAUTION` - CAUTION
+        * `WARNING` - WARNING
+        * `DANGER` - DANGER
+        * `CRITICAL` - CRITICAL
+    ExposureProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        worker:
+          type: integer
+        worker_code:
+          type: string
+          readOnly: true
+        worker_name:
+          type: string
+          readOnly: true
+          nullable: true
+        body_weight:
+          type: number
+          format: double
+          minimum: 0.01
+          description: Berat badan (Wb) dalam kilogram.
+        exposure_time:
+          type: number
+          format: double
+          maximum: 24
+          minimum: 0.01
+          description: Waktu pajanan (tE) dalam jam/hari.
+        exposure_frequency:
+          type: number
+          format: double
+          maximum: 365
+          minimum: 0.01
+          description: Frekuensi pajanan (fE) dalam hari/tahun.
+        exposure_duration:
+          type: number
+          format: double
+          minimum: 0.01
+          description: Durasi pajanan (Dt) dalam tahun.
+        inhalation_rate:
+          type: number
+          format: double
+          readOnly: true
+          description: Laju inhalasi (R) dalam m³/jam. Nilai ditentukan otomatis berdasarkan
+            kategori usia dan metodologi ARKL yang disetujui.
+        inhalation_category:
+          type: string
+          readOnly: true
+        approval_status:
+          $ref: '#/components/schemas/ApprovalStatusEnum'
+        review_note:
+          type: string
+        reviewed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        reviewed_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        calculation_status:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - body_weight
+      - calculation_status
+      - created_at
+      - exposure_duration
+      - exposure_frequency
+      - exposure_time
+      - id
+      - inhalation_category
+      - inhalation_rate
+      - reviewed_at
+      - reviewed_by
+      - updated_at
+      - worker
+      - worker_code
+      - worker_name
+    ExposureSummary:
+      type: object
+      properties:
+        worker_count:
+          type: integer
+        average_body_weight:
+          type: number
+          format: double
+          nullable: true
+        average_exposure_time:
+          type: number
+          format: double
+          nullable: true
+        average_exposure_frequency:
+          type: number
+          format: double
+          nullable: true
+        average_exposure_duration:
+          type: number
+          format: double
+          nullable: true
+        average_inhalation_rate:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - average_body_weight
+      - average_exposure_duration
+      - average_exposure_frequency
+      - average_exposure_time
+      - average_inhalation_rate
+      - worker_count
+    H2SReading:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        device:
+          type: integer
+          readOnly: true
+        device_code:
+          type: string
+          readOnly: true
+        ppm:
+          type: number
+          format: double
+          readOnly: true
+        adc:
+          type: integer
+          readOnly: true
+        filtered_adc:
+          type: number
+          format: double
+          readOnly: true
+        level:
+          type: integer
+          readOnly: true
+        status:
+          type: string
+          readOnly: true
+        uptime_ms:
+          type: integer
+          readOnly: true
+        simulated:
+          type: boolean
+          readOnly: true
+        received_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - adc
+      - device
+      - device_code
+      - filtered_adc
+      - id
+      - level
+      - ppm
+      - received_at
+      - simulated
+      - status
+      - uptime_ms
+    H2SSummary:
+      type: object
+      properties:
+        sample_count:
+          type: integer
+        minimum_ppm:
+          type: number
+          format: double
+          nullable: true
+        maximum_ppm:
+          type: number
+          format: double
+          nullable: true
+        average_ppm:
+          type: number
+          format: double
+          nullable: true
+        first_reading_at:
+          type: string
+          format: date-time
+          nullable: true
+        last_reading_at:
+          type: string
+          format: date-time
+          nullable: true
+        simulated_count:
+          type: integer
+        physical_count:
+          type: integer
+        device_count:
+          type: integer
+      required:
+      - average_ppm
+      - device_count
+      - first_reading_at
+      - last_reading_at
+      - maximum_ppm
+      - minimum_ppm
+      - physical_count
+      - sample_count
+      - simulated_count
+    H2STrendResponse:
+      type: object
+      properties:
+        interval:
+          $ref: '#/components/schemas/IntervalEnum'
+        series:
+          type: array
+          items: {}
+      required:
+      - interval
+      - series
+    HistoricalARKLRequest:
+      type: object
+      properties:
+        worker:
+          type: integer
+        device:
+          type: integer
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+      required:
+      - device
+      - end_time
+      - start_time
+      - worker
+    IntervalEnum:
+      enum:
+      - raw
+      - hour
+      - day
+      type: string
+      description: |-
+        * `raw` - raw
+        * `hour` - hour
+        * `day` - day
+    Login:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - password
+      - username
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: '#/components/schemas/CurrentUser'
+      required:
+      - token
+      - user
+    MyExposureProfile:
+      type: object
+      description: 'Personal profile: ownership and review fields cannot be supplied
+        by workers.'
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        worker_code:
+          type: string
+          readOnly: true
+        worker_name:
+          type: string
+          readOnly: true
+          nullable: true
+        body_weight:
+          type: number
+          format: double
+          minimum: 0.01
+          description: Berat badan (Wb) dalam kilogram.
+        exposure_time:
+          type: number
+          format: double
+          maximum: 24
+          minimum: 0.01
+          description: Waktu pajanan (tE) dalam jam/hari.
+        exposure_frequency:
+          type: number
+          format: double
+          maximum: 365
+          minimum: 0.01
+          description: Frekuensi pajanan (fE) dalam hari/tahun.
+        exposure_duration:
+          type: number
+          format: double
+          minimum: 0.01
+          description: Durasi pajanan (Dt) dalam tahun.
+        inhalation_rate:
+          type: number
+          format: double
+          readOnly: true
+          description: Laju inhalasi (R) dalam m³/jam. Nilai ditentukan otomatis berdasarkan
+            kategori usia dan metodologi ARKL yang disetujui.
+        inhalation_category:
+          type: string
+          readOnly: true
+        approval_status:
+          allOf:
+          - $ref: '#/components/schemas/ApprovalStatusEnum'
+          readOnly: true
+        review_note:
+          type: string
+          readOnly: true
+        reviewed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        reviewed_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        calculation_status:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - approval_status
+      - body_weight
+      - calculation_status
+      - created_at
+      - exposure_duration
+      - exposure_frequency
+      - exposure_time
+      - id
+      - inhalation_category
+      - inhalation_rate
+      - review_note
+      - reviewed_at
+      - reviewed_by
+      - updated_at
+      - worker_code
+      - worker_name
+    MyMonitoring:
+      type: object
+      properties:
+        device:
+          allOf:
+          - $ref: '#/components/schemas/Device'
+          readOnly: true
+        reading:
+          allOf:
+          - $ref: '#/components/schemas/H2SReading'
+          readOnly: true
+          nullable: true
+      required:
+      - device
+      - reading
+    MyWorkerProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 150
+        age:
+          type: integer
+          maximum: 120
+          minimum: 1
+        is_active:
+          type: boolean
+          readOnly: true
+        monitoring_device_code:
+          type: string
+          readOnly: true
+          nullable: true
+        monitoring_device_name:
+          type: string
+          readOnly: true
+          nullable: true
+        monitoring_device_location:
+          type: string
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - code
+      - created_at
+      - id
+      - is_active
+      - monitoring_device_code
+      - monitoring_device_location
+      - monitoring_device_name
+      - updated_at
+    PaginatedARKLResultList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ARKLResult'
+    PaginatedAlertList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alert'
+    PaginatedDeviceList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Device'
+    PaginatedExposureProfileList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExposureProfile'
+    PaginatedH2SReadingList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/H2SReading'
+    PaginatedReferenceMeasurementList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReferenceMeasurement'
+    PaginatedWorkerList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Worker'
+    PatchedDevice:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        device_code:
+          type: string
+          maxLength: 100
+        name:
+          type: string
+          maxLength: 150
+        location:
+          type: string
+          maxLength: 255
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedExposureProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        worker:
+          type: integer
+        worker_code:
+          type: string
+          readOnly: true
+        worker_name:
+          type: string
+          readOnly: true
+          nullable: true
+        body_weight:
+          type: number
+          format: double
+          minimum: 0.01
+          description: Berat badan (Wb) dalam kilogram.
+        exposure_time:
+          type: number
+          format: double
+          maximum: 24
+          minimum: 0.01
+          description: Waktu pajanan (tE) dalam jam/hari.
+        exposure_frequency:
+          type: number
+          format: double
+          maximum: 365
+          minimum: 0.01
+          description: Frekuensi pajanan (fE) dalam hari/tahun.
+        exposure_duration:
+          type: number
+          format: double
+          minimum: 0.01
+          description: Durasi pajanan (Dt) dalam tahun.
+        inhalation_rate:
+          type: number
+          format: double
+          readOnly: true
+          description: Laju inhalasi (R) dalam m³/jam. Nilai ditentukan otomatis berdasarkan
+            kategori usia dan metodologi ARKL yang disetujui.
+        inhalation_category:
+          type: string
+          readOnly: true
+        approval_status:
+          $ref: '#/components/schemas/ApprovalStatusEnum'
+        review_note:
+          type: string
+        reviewed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        reviewed_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        calculation_status:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedMyExposureProfile:
+      type: object
+      description: 'Personal profile: ownership and review fields cannot be supplied
+        by workers.'
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        worker_code:
+          type: string
+          readOnly: true
+        worker_name:
+          type: string
+          readOnly: true
+          nullable: true
+        body_weight:
+          type: number
+          format: double
+          minimum: 0.01
+          description: Berat badan (Wb) dalam kilogram.
+        exposure_time:
+          type: number
+          format: double
+          maximum: 24
+          minimum: 0.01
+          description: Waktu pajanan (tE) dalam jam/hari.
+        exposure_frequency:
+          type: number
+          format: double
+          maximum: 365
+          minimum: 0.01
+          description: Frekuensi pajanan (fE) dalam hari/tahun.
+        exposure_duration:
+          type: number
+          format: double
+          minimum: 0.01
+          description: Durasi pajanan (Dt) dalam tahun.
+        inhalation_rate:
+          type: number
+          format: double
+          readOnly: true
+          description: Laju inhalasi (R) dalam m³/jam. Nilai ditentukan otomatis berdasarkan
+            kategori usia dan metodologi ARKL yang disetujui.
+        inhalation_category:
+          type: string
+          readOnly: true
+        approval_status:
+          allOf:
+          - $ref: '#/components/schemas/ApprovalStatusEnum'
+          readOnly: true
+        review_note:
+          type: string
+          readOnly: true
+        reviewed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        reviewed_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        calculation_status:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedMyWorkerProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 150
+        age:
+          type: integer
+          maximum: 120
+          minimum: 1
+        is_active:
+          type: boolean
+          readOnly: true
+        monitoring_device_code:
+          type: string
+          readOnly: true
+          nullable: true
+        monitoring_device_name:
+          type: string
+          readOnly: true
+          nullable: true
+        monitoring_device_location:
+          type: string
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedReferenceMeasurement:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        concentration_ppm:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,6})?$
+        measured_at:
+          type: string
+          format: date-time
+        location:
+          type: string
+          maxLength: 255
+        source:
+          type: string
+          maxLength: 255
+        notes:
+          type: string
+        workers:
+          type: array
+          items:
+            type: integer
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        used:
+          type: boolean
+          readOnly: true
+    PatchedWorker:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          maxLength: 50
+        name:
+          type: string
+          maxLength: 150
+        age:
+          type: integer
+          maximum: 120
+          minimum: 1
+        is_active:
+          type: boolean
+        monitoring_device:
+          type: integer
+          nullable: true
+        monitoring_device_code:
+          type: string
+          readOnly: true
+          nullable: true
+        monitoring_device_name:
+          type: string
+          readOnly: true
+          nullable: true
+        monitoring_device_location:
+          type: string
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    RealtimeARKLRequest:
+      type: object
+      properties:
+        worker:
+          type: integer
+        device:
+          type: integer
+      required:
+      - device
+      - worker
+    RealtimeARKLResponse:
+      type: object
+      description: |-
+        Response from one realtime ARKL
+        orchestration request.
+      properties:
+        arkl_result:
+          $ref: '#/components/schemas/ARKLResult'
+        alert_evaluation:
+          $ref: '#/components/schemas/AlertEvaluationResponse'
+      required:
+      - alert_evaluation
+      - arkl_result
+    ReferenceARKLRequest:
+      type: object
+      properties:
+        worker:
+          type: integer
+        measurement:
+          type: integer
+      required:
+      - measurement
+      - worker
+    ReferenceMeasurement:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        concentration_ppm:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,6})?$
+        measured_at:
+          type: string
+          format: date-time
+        location:
+          type: string
+          maxLength: 255
+        source:
+          type: string
+          maxLength: 255
+        notes:
+          type: string
+        workers:
+          type: array
+          items:
+            type: integer
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        used:
+          type: boolean
+          readOnly: true
+      required:
+      - concentration_ppm
+      - created_at
+      - id
+      - measured_at
+      - source
+      - used
+    ReferenceMeasurementSnapshot:
+      type: object
+      description: Worker-visible provenance; never expose other assigned worker IDs.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        concentration_ppm:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,6})?$
+          readOnly: true
+        measured_at:
+          type: string
+          format: date-time
+          readOnly: true
+        location:
+          type: string
+          readOnly: true
+        source:
+          type: string
+          readOnly: true
+      required:
+      - concentration_ppm
+      - id
+      - location
+      - measured_at
+      - source
+    RiskDistribution:
+      type: object
+      properties:
+        calculation_version:
+          type: string
+        total_count:
+          type: integer
+        distribution:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskDistributionItem'
+      required:
+      - calculation_version
+      - distribution
+      - total_count
+    RiskDistributionItem:
+      type: object
+      properties:
+        interpretation:
+          type: string
+        count:
+          type: integer
+        percentage:
+          type: number
+          format: double
+      required:
+      - count
+      - interpretation
+      - percentage
+    RiskStatusEnum:
+      enum:
+      - NO_ACTION_REQUIRED
+      - MONITORING_REQUIRED
+      - RISK_MANAGEMENT_REQUIRED
+      - IMMEDIATE_ACTION_REQUIRED
+      type: string
+      description: |-
+        * `NO_ACTION_REQUIRED` - NO_ACTION_REQUIRED
+        * `MONITORING_REQUIRED` - MONITORING_REQUIRED
+        * `RISK_MANAGEMENT_REQUIRED` - RISK_MANAGEMENT_REQUIRED
+        * `IMMEDIATE_ACTION_REQUIRED` - IMMEDIATE_ACTION_REQUIRED
+    RoleEnum:
+      enum:
+      - ADMIN
+      - OPERATOR
+      - RESEARCHER
+      - WORKER
+      type: string
+      description: |-
+        * `ADMIN` - Admin
+        * `OPERATOR` - Operator
+        * `RESEARCHER` - Researcher
+        * `WORKER` - Worker
+    StatusEnum:
+      enum:
+      - OPEN
+      - ACKNOWLEDGED
+      - RESOLVED
+      type: string
+      description: |-
+        * `OPEN` - OPEN
+        * `ACKNOWLEDGED` - ACKNOWLEDGED
+        * `RESOLVED` - RESOLVED
+    Worker:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          maxLength: 50
+        name:
+          type: string
+          maxLength: 150
+        age:
+          type: integer
+          maximum: 120
+          minimum: 1
+        is_active:
+          type: boolean
+        monitoring_device:
+          type: integer
+          nullable: true
+        monitoring_device_code:
+          type: string
+          readOnly: true
+          nullable: true
+        monitoring_device_name:
+          type: string
+          readOnly: true
+          nullable: true
+        monitoring_device_location:
+          type: string
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - age
+      - code
+      - created_at
+      - id
+      - monitoring_device_code
+      - monitoring_device_location
+      - monitoring_device_name
+      - name
+      - updated_at
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
